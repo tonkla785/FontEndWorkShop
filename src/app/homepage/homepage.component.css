@@ -1,0 +1,192 @@
+.nav-style {
+  background-color: #3970aa;
+  padding: 1px 10px;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  border-radius: 4px;
+}
+
+.menu-btn:hover {
+  background-color: #b0b8c0;
+}
+
+.menu-btn i {
+  font-size: 1.5rem;
+}
+
+.text-nav {
+  text-align: right;
+  font-size: 12px;
+  color: white;
+  margin-top: 5px;
+  margin-right: 0px;
+  padding: 0;
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+
+.thick-icon {
+  font-size: 15px;
+  color: #fff;
+}
+
+.body-home {
+  min-height: 100vh;
+  background-color: #e3e4e5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.main-table {
+  background-color: white;
+  border-radius: 5px;
+  padding: 1px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 100%;
+  border-top: 4px solid #4dcbed;
+}
+
+.main-header {
+  text-align: start;
+  padding: 5px;
+  border-radius: 5px 5px 0 0;
+  margin: 0;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.dash-icon {
+  text-align: end;
+  font-size: 25px;
+  color: #a1a1a1;
+  padding-right: 10px;
+}
+
+.header-container {
+  border-bottom: 2px solid #dcdcdc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  margin-bottom: 5px;
+}
+
+.custom-table ::ng-deep .ant-table-thead>tr>th,
+.custom-table ::ng-deep .ant-table-tbody>tr>td {
+  border: 1px solid #e6e9eb;
+  text-align: center;
+}
+
+.add-icon {
+  font-size: 25px;
+  color: #303030;
+  font-weight: bold;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.btn-style {
+  background: rgb(221, 221, 221);
+  border: none;
+  width: 70px;
+  height: 25px;
+  cursor: pointer;
+  border-radius: 4px;
+  padding-bottom: 40px;
+}
+
+.btn-table {
+  background: rgb(221, 221, 221);
+  border: none;
+  width: 50px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.modal-btn {
+  justify-content: center;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.error-text {
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  font-size: 0.8rem;
+  color: #dc3545;
+}
+
+input.form-control,
+select.form-select {
+  height: 38px;
+}
+
+.header-modal {
+  color: white;
+  font-weight: 400;
+  background-color: #3970aa;
+  padding: 0;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.form-row-item {
+  margin-bottom: 10px;
+}
+
+.uniform-input,
+select.form-select {
+  height: 42px;
+  line-height: 42px;
+}
+
+label.col-form-label {
+  width: 90px;
+  text-align: right;
+  font-weight: 500;
+  padding-right: 10px;
+  margin-right: 25px;
+}
+
+.flex-grow-1 {
+  flex: 1;
+}
+
+.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 2rem;
+  padding-left: 5rem;
+  padding-right: 7rem;
+}
+
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.custom-table table {
+  width: max-content;
+  min-width: 900px;
+}

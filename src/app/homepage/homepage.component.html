@@ -1,0 +1,256 @@
+<nav class="navbar nav-style">
+  <button class="menu-btn">
+    <i class="bi bi-list"></i>
+  </button>
+  <span class="navbar-brand text-nav">
+    ยินดีต้อนรับ : คุณ Tonkla &nbsp;
+    <i class="bi bi-box-arrow-right thick-icon"></i><br />
+    <p class="text-nav">{{ date | thDate }} {{ date | thTime }}</p>
+  </span>
+</nav>
+
+<div class="container-fluid body-home">
+  <div class="container-fluid main-table">
+    <div class="container-fluid header-container">
+      <p class="main-header">ผู้ใช้งาน</p>
+      <i class="bi bi-dash dash-icon"></i>
+    </div>
+
+    <div class="table-responsive-wrapper">
+      <nz-table
+        #basicTable
+        nzBordered
+        class="custom-table"
+        [nzPageSize]="5"
+        [nzData]="user"
+        nzNoResult="ไม่มีข้อมูล"
+      >
+        <thead class="thead-light">
+          <tr>
+            <th>ลำดับ</th>
+            <th>รหัสผู้ใช้งาน</th>
+            <th>ชื่อ-นามสกุล</th>
+            <th>วันเกิด</th>
+            <th>อายุ</th>
+            <th>เพศ</th>
+            <th>วันที่บันทึก</th>
+            <th>บันทึกโดย</th>
+            <th>
+              <button
+                type="button"
+                class="btn-style"
+                (click)="openAddUserModal()"
+              >
+                <p class="bi bi-plus add-icon"></p>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of basicTable.data; let i = index">
+            <td>
+              {{ (basicTable.nzPageIndex - 1) * basicTable.nzPageSize + i + 1 }}
+            </td>
+            <td>{{ user.id }}</td>
+            <td>{{ user.firstname }} {{ user.lastname }}</td>
+            <td>{{ user.birddate | thDateSh }}</td>
+            <td>{{ user.age }}</td>
+            <td>{{ user.gender }}</td>
+            <td>{{ user.update | thDateSh }}</td>
+            <td>{{ user.firstname }}</td>
+            <td>
+              <button class="btn-table" (click)="openEditUserModal(user)">
+                Edit
+              </button>
+              <button class="btn-table" (click)="openDeleteModal(user.id)">
+                Del
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>
+
+<!-- modal edit add-->
+<div
+  class="modal fade"
+  id="exampleModal"
+  bsModal
+  #exampleModal="bs-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header header-modal">
+        <p class="modal-title">
+          {{ isEditMode ? "แก้ไขข้อมูลผู้ใช้" : "กรุณากรอกข้อมูลผู้ใช้งาน" }}
+        </p>
+      </div>
+
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row g-3">
+            <!-- ชื่อ -->
+            <div
+              class="col-md-6 d-flex align-items-center position-relative form-row-item"
+            >
+              <label for="firstName" class="col-form-label">ชื่อ</label>
+              <div class="flex-grow-1 position-relative">
+                <input
+                  id="firstName"
+                  type="text"
+                  class="form-control uniform-input"
+                  [(ngModel)]="firstName"
+                  (ngModelChange)="error.firstNameError = ''"
+                />
+                <small class="error-text" *ngIf="error.firstNameError">
+                  {{ error.firstNameError }}
+                </small>
+              </div>
+            </div>
+
+            <!-- นามสกุล -->
+            <div
+              class="col-md-6 d-flex align-items-center position-relative form-row-item"
+            >
+              <label for="lastName" class="col-form-label">นามสกุล</label>
+              <div class="flex-grow-1 position-relative">
+                <input
+                  id="lastName"
+                  type="text"
+                  class="form-control uniform-input"
+                  [(ngModel)]="lastName"
+                  (ngModelChange)="error.lastNameError = ''"
+                />
+                <small class="error-text" *ngIf="error.lastNameError">
+                  {{ error.lastNameError }}
+                </small>
+              </div>
+            </div>
+
+            <!-- วันเกิด -->
+            <div
+              class="col-md-6 d-flex align-items-center position-relative form-row-item"
+            >
+              <label for="birthDate" class="col-form-label">วันเกิด</label>
+              <div class="flex-grow-1 position-relative">
+                <input
+                  id="birthDate"
+                  class="form-control uniform-input"
+                  type="text"
+                  placeholder="dd/mm/yyyy"
+                  bsDatepicker
+                  readonly
+                  [minDate]="minDate"
+                  [maxDate]="maxDate"
+                  [bsConfig]="{ isAnimated: true }"
+                  style="background-color: white"
+                  [(bsValue)]="birthDate"
+                  (bsValueChange)="onBirthDateChange($event)"
+                  [bsConfig]="{ containerClass: 'theme-dark-blue',startView: 'year',showWeekNumbers:false}"
+                />
+                <small class="error-text" *ngIf="error.birthDateError">
+                  {{ error.birthDateError }}
+                </small>
+              </div>
+            </div>
+
+            <!-- อายุ -->
+            <div
+              class="col-md-6 d-flex align-items-center position-relative form-row-item"
+            >
+              <label for="age" class="col-form-label">อายุ</label>
+              <div class="flex-grow-1 position-relative">
+                <input
+                  id="age"
+                  type="text"
+                  class="form-control uniform-input"
+                  [(ngModel)]="age"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <!-- เพศ -->
+            <div
+              class="col-md-6 d-flex align-items-center position-relative form-row-item"
+            >
+              <label for="gender" class="col-form-label">เพศ</label>
+              <div class="flex-grow-1 position-relative">
+                <select
+                  id="gender"
+                  class="form-select uniform-input"
+                  [(ngModel)]="gender"
+                  (ngModelChange)="error.genderError = ''"
+                >
+                  <option value="" disabled selected>กรุณาเลือกเพศ</option>
+                  <option value="ชาย">ชาย</option>
+                  <option value="หญิง">หญิง</option>
+                  <option value="อื่นๆ">อื่นๆ</option>
+                </select>
+                <small class="error-text" *ngIf="error.genderError">
+                  {{ error.genderError }}
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer modal-btn">
+        <button type="button" class="btn btn-primary" (click)="saveUser()">
+          {{ isEditMode ? "บันทึกการแก้ไข" : "บันทึก" }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="userModal.hide(); resetForm()"
+        >
+          ยกเลิก
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  bsModal
+  #deleteModal="bs-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">ยืนยันการลบ</h5>
+      </div>
+      <div class="modal-body">คุณแน่ใจหรือไม่ว่าต้องการลบผู้ใช้นี้?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="deleteModal.hide()"
+        >
+          ยกเลิก
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="confirmDeleteUser()"
+        >
+          ลบ
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
