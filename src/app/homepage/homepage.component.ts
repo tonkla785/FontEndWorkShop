@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { User, UserFormError } from '../interface/userinterface';
 import { UserService } from '../service/userservice';
-import { BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-homepage',
@@ -15,7 +14,7 @@ export class HomepageComponent implements OnInit {
 
   minDate?: Date;
   maxDate: Date;
-  
+
   user: User[] = [];
   error: UserFormError = {
     firstNameError: '',
