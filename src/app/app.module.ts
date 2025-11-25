@@ -14,6 +14,9 @@ import { ThTimePipe } from './pipe/th-time.pipe';
 import { ThDateShPipe } from './pipe/th-date-sh.pipe';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { thLocale } from 'ngx-bootstrap/locale';
+import { HttpClientModule } from '@angular/common/http';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 const thBeLocale = {
   ...thLocale,
@@ -35,6 +38,7 @@ defineLocale('th-be', thBeLocale);
     ThDatePipe,
     ThTimePipe,
     ThDateShPipe,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +48,10 @@ defineLocale('th-be', thBeLocale);
     ReactiveFormsModule,
     ModalModule,
     NzTableModule,
+    HttpClientModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
     BsDatepickerModule.forRoot(),
   ],
   providers: [],

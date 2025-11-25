@@ -2,10 +2,10 @@ export interface User {
   id: number;
   firstname: string;
   lastname: string;
-  birddate: Date | undefined;
+  birthday?: string;
   age: number;
   gender: string;
-  update: Date;
+  updateDate?: string;
 }
 
 export interface UserFormError {
@@ -13,4 +13,10 @@ export interface UserFormError {
   lastNameError: string;
   birthDateError: string;
   genderError: string;
+}
+
+export interface ApiResponse<T> {
+  responseStatus: number;
+  responseMessage: string;
+  data: T;
 }

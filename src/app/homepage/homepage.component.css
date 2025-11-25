@@ -159,6 +159,7 @@ select.form-select {
 select.form-select {
   height: 42px;
   line-height: 42px;
+  padding: 0 0.75rem;
 }
 
 label.col-form-label {
@@ -184,9 +185,36 @@ label.col-form-label {
 .table-responsive-wrapper {
   width: 100%;
   overflow-x: auto;
+  padding-left: 70px;
+  padding-right: 70px;
 }
 
 .custom-table table {
   width: max-content;
   min-width: 900px;
+}
+
+.col-table {
+  width: 150px;
+}
+
+.btn-search {
+  background-color: rgb(221, 221, 221);
+  color: black;
+  height: 38px;
+  border: none;
+  padding: 0 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.custom-collapse {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.7s ease;
+}
+
+.custom-collapse.show {
+  max-height: 1000px;
 }

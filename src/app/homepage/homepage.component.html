@@ -17,25 +17,178 @@
     </div>
 
     <div class="table-responsive-wrapper">
+      <div class="row g-3 align-items-start">
+        <div class="col-auto d-flex align-items-start mb-2">
+          <button class="btn-search" (click)="toggleForm()">
+            > &nbsp; ค้นหาเพิ่มเติม <i class="bi bi-funnel"></i>
+          </button>
+        </div>
+
+        <div class="col mb-3 custom-collapse" [class.show]="showForm">
+          <div class="p-3">
+            <div class="row g-3">
+              <div
+                class="col-md-4 d-flex align-items-center position-relative form-row-item"
+              >
+                <label for="id" class="col-form-label">รหัสผู้ใช้งาน</label>
+                <div class="flex-grow-1 position-relative">
+                  <input
+                    id="id"
+                    type="number"
+                    class="form-control uniform-input"
+                    [(ngModel)]="id"
+                  />
+                </div>
+              </div>
+
+              <div
+                class="col-md-4 d-flex align-items-center position-relative form-row-item"
+              >
+                <label for="Name" class="col-form-label">ชื่อ-นามสกุล</label>
+                <div class="flex-grow-1 position-relative">
+                  <input
+                    id="Name"
+                    type="text"
+                    class="form-control uniform-input"
+                    [(ngModel)]="fullName"
+                  />
+                </div>
+              </div>
+
+              <!-- อายุ -->
+              <div
+                class="col-md-4 d-flex align-items-center position-relative form-row-item"
+              >
+                <label for="age" class="col-form-label">อายุ</label>
+                <div class="flex-grow-1 position-relative">
+                  <input
+                    id="age"
+                    type="number"
+                    class="form-control uniform-input"
+                    [(ngModel)]="age"
+                  />
+                </div>
+              </div>
+
+              <!-- วันเกิด -->
+              <div
+                class="col-md-4 d-flex align-items-center position-relative form-row-item"
+              >
+                <label for="birthDate" class="col-form-label">วันเกิด</label>
+                <div class="flex-grow-1 position-relative">
+                  <input
+                    id="birthDate"
+                    class="form-control uniform-input"
+                    type="text"
+                    placeholder="dd/mm/yyyy"
+                    bsDatepicker
+                    readonly
+                    [minDate]="minDate"
+                    [maxDate]="maxDate"
+                    [bsConfig]="{
+                      isAnimated: true,
+                      containerClass: 'theme-dark-blue',
+                      startView: 'year',
+                      showWeekNumbers: false
+                    }"
+                    style="background-color: white"
+                    [(bsValue)]="searchBirthDate"
+                  />
+                </div>
+              </div>
+
+              <!-- เพศ -->
+              <div
+                class="col-md-4 d-flex align-items-center position-relative form-row-item"
+              >
+                <label for="gender" class="col-form-label">เพศ</label>
+                <div class="flex-grow-1 position-relative">
+                  <select
+                    id="gender"
+                    class="form-select uniform-input"
+                    [(ngModel)]="gender"
+                  >
+                    <option value="" disabled selected>กรุณาเลือกเพศ</option>
+                    <option value="ชาย">ชาย</option>
+                    <option value="หญิง">หญิง</option>
+                    <option value="อื่นๆ">อื่นๆ</option>
+                  </select>
+                </div>
+              </div>
+
+              <div
+                class="col-md-4 d-flex align-items-center position-relative form-row-item"
+              >
+                <label for="updateDate" class="col-form-label"
+                  >วันที่บันทึก</label
+                >
+                <div class="flex-grow-1 position-relative">
+                  <input
+                    id="updateDate"
+                    class="form-control uniform-input"
+                    type="text"
+                    placeholder="dd/mm/yyyy"
+                    bsDatepicker
+                    readonly
+                    [minDate]="minDate"
+                    [maxDate]="maxDate"
+                    [bsConfig]="{
+                      isAnimated: true,
+                      containerClass: 'theme-dark-blue',
+                      startView: 'year',
+                      showWeekNumbers: false
+                    }"
+                    style="background-color: white"
+                    [(bsValue)]="updateDate"
+                  />
+                </div>
+              </div>
+
+              <div
+                class="col-md-4 d-flex align-items-center position-relative form-row-item"
+              >
+                <label for="firstName" class="col-form-label">บันทึกโดย</label>
+                <div class="flex-grow-1 position-relative">
+                  <input
+                    id="firstName"
+                    type="text"
+                    class="form-control uniform-input"
+                    [(ngModel)]="firstName"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button type="button" class="btn-search" (click)="searchUsers()">
+              ค้นหา
+            </button>
+            &nbsp;
+            <button type="button" class="btn-search" (click)="resetForm(); fetchUsers()">
+              ล้าง
+            </button>
+          </div>
+        </div>
+      </div>
       <nz-table
         #basicTable
         nzBordered
         class="custom-table"
         [nzPageSize]="5"
-        [nzData]="user"
+        [nzData]="users"
         nzNoResult="ไม่มีข้อมูล"
       >
         <thead class="thead-light">
           <tr>
-            <th>ลำดับ</th>
-            <th>รหัสผู้ใช้งาน</th>
-            <th>ชื่อ-นามสกุล</th>
-            <th>วันเกิด</th>
-            <th>อายุ</th>
-            <th>เพศ</th>
-            <th>วันที่บันทึก</th>
-            <th>บันทึกโดย</th>
-            <th>
+            <th class="col-table">ลำดับ</th>
+            <th class="col-table">รหัสผู้ใช้งาน</th>
+            <th class="col-table">ชื่อ-นามสกุล</th>
+            <th class="col-table">วันเกิด</th>
+            <th class="col-table">อายุ</th>
+            <th class="col-table">เพศ</th>
+            <th class="col-table">วันที่บันทึก</th>
+            <th class="col-table">บันทึกโดย</th>
+            <th class="col-table">
               <button
                 type="button"
                 class="btn-style"
@@ -53,10 +206,10 @@
             </td>
             <td>{{ user.id }}</td>
             <td>{{ user.firstname }} {{ user.lastname }}</td>
-            <td>{{ user.birddate | thDateSh }}</td>
+            <td>{{ user.birthday | thDateSh }}</td>
             <td>{{ user.age }}</td>
             <td>{{ user.gender }}</td>
-            <td>{{ user.update | thDateSh }}</td>
+            <td>{{ user.updateDate | thDateSh }}</td>
             <td>{{ user.firstname }}</td>
             <td>
               <button class="btn-table" (click)="openEditUserModal(user)">
@@ -70,6 +223,7 @@
         </tbody>
       </nz-table>
     </div>
+    <app-dashboard></app-dashboard>
   </div>
 </div>
 
@@ -152,7 +306,11 @@
                   style="background-color: white"
                   [(bsValue)]="birthDate"
                   (bsValueChange)="onBirthDateChange($event)"
-                  [bsConfig]="{ containerClass: 'theme-dark-blue',startView: 'year',showWeekNumbers:false}"
+                  [bsConfig]="{
+                    containerClass: 'theme-dark-blue',
+                    startView: 'year',
+                    showWeekNumbers: false
+                  }"
                 />
                 <small class="error-text" *ngIf="error.birthDateError">
                   {{ error.birthDateError }}

@@ -11,6 +11,6 @@ export class ThDateShPipe implements PipeTransform {
     const day = date.getDate().toString()
     const month = (date.getMonth() + 1).toString()
     const year = (date.getFullYear() + 543).toString();
-    return `${day}-${month}-${year}`;
+    return `${day}/${month}/${year}`;
   }
 }

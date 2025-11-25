@@ -1,42 +1,54 @@
 import { Injectable } from '@angular/core';
-import { User } from '../interface/userinterface';
+import { ApiResponse, User } from '../interface/userinterface';
+import { HttpClient } from '@angular/common/http';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private users: User[] = [];
+  private usersChanged = new BehaviorSubject<boolean>(false);
+  usersChanged$ = this.usersChanged.asObservable();
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  getUsers(): User[] {
-    return [...this.users];
+  private baseUrl = 'http://localhost:8080/user-controller';
+
+  getUsers(): Observable<any> {
+    return this.http
+      .get<ApiResponse<any>>(`${this.baseUrl}/get-all-user`)
+      .pipe(map((res) => res.data));
   }
 
-  addUser(user: User): void {
-    const lastId =
-      this.users.length > 0 ? this.users[this.users.length - 1].id : 0;
-    user.id = lastId + 1;
-    user.update = new Date();
-    this.users = [...this.users, user];
+  getUserByField(user: User): Observable<any> {
+    return this.http
+      .post<ApiResponse<any>>(`${this.baseUrl}/find-user-by-field`, user)
+      .pipe(map((res) => res.data));
   }
 
-  updateUser(id: number, updatedUser: User): void {
-    this.users = this.users.map((u) =>
-      u.id === id ? { ...u, ...updatedUser} : u
-    );
+  addUser(user: User): Observable<any> {
+    return this.http.post(`${this.baseUrl}/create-user`, user);
   }
 
-  deleteUser(id: number): void {
-    this.users = this.users.filter((u) => u.id !== id);
+  updateUser(id: number, updatedUser: User): Observable<any> {
+    return this.http.put(`${this.baseUrl}/update-user/${id}`, updatedUser);
   }
 
-  calculateAge(birthDate: Date): number {
-    if (!birthDate) return 0;
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/delete-user/${id}`);
+  }
+
+  notifyUsersChanged() {
+    this.usersChanged.next(true);
+  }
+
+  calculateAge(date: Date): number {
+    if (!date) return 0;
     const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    const d = today.getDate() - birthDate.getDate();
+    let age = today.getFullYear() - date.getFullYear();
+    const m = today.getMonth() - date.getMonth();
+    const d = today.getDate() - date.getDate();
     if (m < 0 || (m === 0 && d < 0)) age--;
     return age > 0 ? age : 0;
   }
